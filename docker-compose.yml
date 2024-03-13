@@ -1,0 +1,23 @@
+version: '3'
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+
+    image: iamzee007/currency-converter-backend:v1.0
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGODB_URL=<>
+      - JWT_SECRET=<>
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: iamzee007/currency-converter-frontend:v1.0
+    ports:
+      - "5000:5000"
+    environment:
+      - VITE_API_KEY=<>

@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: currency-converter
+  template:
+    metadata:
+      labels:
+        app: currency-converter
+        tier: frontend
+        track: stable
+    spec:
+      containers:
+        - name: currency-frontend
+          image: iamzee007/currency-converter-frontend:v1.0
+          ports:
+            - containerPort: 5000
+          env:
+            - name: VITE_API_KEY
+              value: <>
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  type: LoadBalancer
+  selector:
+    app: currency-converter
+    tier: frontend
+  ports:
+    - protocol: "TCP"
+      port: 80
+      targetPort: 5000

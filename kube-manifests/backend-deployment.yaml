@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: currency-converter
+      tier: backend
+      track: stable
+  template:
+    metadata:
+      labels:
+        app: currency-converter
+        tier: backend
+        track: stable
+    spec:
+      containers:
+        - name: currency-converter
+          image: iamzee007/currency-converter-backend:v1.0
+          ports:
+            - name: http
+              containerPort: 3000
+          env:
+            - name: MONGODB_URL
+              value: <>
+            - name: JWT_SECRET
+              value: <>
+          
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: currency-converter
+spec:
+  type: ClusterIP
+  selector:
+    app: currency-converter
+    tier: backend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
