@@ -19,6 +19,13 @@ spec:
           image: iamzee007/currency-converter-frontend:v1.0
           ports:
             - containerPort: 5000
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "500Mi"
+              cpu: "200m" 
           env:
             - name: VITE_API_KEY
               value: <>
